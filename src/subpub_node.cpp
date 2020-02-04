@@ -27,12 +27,12 @@ private:
 void imuCallback(const sensor_msgs::msg::Imu::SharedPtr msg)
 {
   modified_msg_ = *msg;
-  modified_msg_.angular_velocity_covariance[0] = 0.0004;
-  modified_msg_.angular_velocity_covariance[4] = 0.0004;
-  modified_msg_.angular_velocity_covariance[8] = 0.0004;
-  modified_msg_.linear_acceleration_covariance[0] = 0.0004;
-  modified_msg_.linear_acceleration_covariance[4] = 0.0004;
-  modified_msg_.linear_acceleration_covariance[8] = 0.0004;
+  //modified_msg_.angular_velocity_covariance[0] = 0.0004;
+  //modified_msg_.angular_velocity_covariance[4] = 0.0004;
+  //modified_msg_.angular_velocity_covariance[8] = 0.0004;
+  //modified_msg_.linear_acceleration_covariance[0] = 0.0004;
+  //modified_msg_.linear_acceleration_covariance[4] = 0.0004;
+  //modified_msg_.linear_acceleration_covariance[8] = 0.0004;
 
   modified_msg_.header.stamp = this->get_clock()->now();
 
