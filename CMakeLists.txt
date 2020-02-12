@@ -19,27 +19,46 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rcl REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(builtin_interfaces REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+### msgs
+find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+
+
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
+### build and generate message interfaces
+FILE(GLOB_RECURSE MESSAGEFILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "msg/*.msg")
+rosidl_generate_interfaces(${PROJECT_NAME}
+  ${MESSAGEFILES}
+  DEPENDENCIES std_msgs sensor_msgs geometry_msgs builtin_interfaces
+  ADD_LINTER_TESTS
+)
 
-add_executable(
-  subpub_node
+
+add_executable(${PROJECT_NAME}_node
   src/subpub_node.cpp
 )
-ament_target_dependencies(
-  subpub_node
+ament_target_dependencies(${PROJECT_NAME}_node
   rcl
   rclcpp
   sensor_msgs
 )
 
 
+### build target interfaces 
+rosidl_target_interfaces(${PROJECT_NAME}_node
+  ${PROJECT_NAME} "rosidl_typesupport_cpp"
+)
+
+
+
 install(
-  TARGETS
-  subpub_node
+  TARGETS ${PROJECT_NAME}_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
